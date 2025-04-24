@@ -1,0 +1,55 @@
+<!-- Add User -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     th:object="${product}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-bs-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/product/update}" enctype="multipart/form-data" method="post">
+                    <!-- Id -->
+                    <input type="hidden" class="form-control" th:field="*{id}">
+
+                    <!-- Name -->
+                    <div class="input-group mb-3">
+                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}">
+                    </div>
+
+                    <!-- Supplier -->
+                    <div class="input-group mb-3">
+                        <label for="supplier" class="col-sm-2 col-form-label">Supplier</label>
+                        <input type="text" class="form-control" id="supplier" th:field="*{supplier}">
+                    </div>
+
+                    <!-- Price -->
+                    <div class="input-group mb-3">
+                        <label for="price" class="col-sm-2 col-form-label">Price</label>
+                        <input type="text" class="form-control" id="price" th:field="*{price}">
+                    </div>
+
+                    <!-- Picture -->
+                    <div class="input-group mb-3">
+                        <label for="img" class="col-sm-2 col-form-label">Picture</label>
+                        <img style="width: 1.5cm; margin-right: 10px;"
+                             th:src="@{'/images/nophoto.jpg'}"/>
+                        <div class="form-inline">
+                            <input type="hidden" th:field="*{imageUrl}">
+                            <input type="file" class="form-control-file" id="img" name="img" accept="image/*">
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="float-end">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" onclick="javascript:window.location.href='/product/all'"
+                                class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

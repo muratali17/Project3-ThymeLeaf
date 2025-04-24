@@ -1,0 +1,57 @@
+<!-- Add User -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-bs-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:object="${order}">
+                    <!-- Id -->
+                    <input type="hidden" class="form-control" th:field="*{id}">
+
+                    <!-- Customer -->
+                    <div class="input-group mb-3">
+                        <label for="customer" class="col-sm-2 col-form-label">Customer</label>
+                        <input type="text" class="form-control" id="customer" readonly th:field="${order.customer.name}">
+                    </div>
+
+                    <!-- Product -->
+                    <div class="input-group mb-3">
+                        <label for="car" class="col-sm-2 col-form-label">Product</label>
+                        <input type="text" class="form-control" id="car" th:value="${order.product.name}+' - '+${order.product.price}+' ( '+${order.product.supplier} + ')' "
+                        readonly>
+                    </div>
+
+                    <!-- City -->
+                    <div class="input-group mb-3">
+                        <label for="city" class="col-sm-2 col-form-label">City</label>
+                        <input type="text" class="form-control" id="city" th:field="*{city}" readonly>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="input-group mb-3">
+                        <label for="orderDate" class="col-sm-2 col-form-label">Order Date</label>
+                        <input type="datetime-local" class="form-control" id="orderDate"
+                               th:value="${order.date}" readonly>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="input-group mb-3">
+                        <label for="role" class="col-sm-2 col-form-label">Role</label>
+                        <input type="text" class="form-control" id="role" th:field="*{status}" readonly>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="float-end">
+                        <button type="button" onclick="javascript:window.location.href='/order/all'"
+                                class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

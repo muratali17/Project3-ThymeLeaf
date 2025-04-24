@@ -1,0 +1,50 @@
+<!-- User Details -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     th:object="${product}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-bs-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Id -->
+                    <div class="input-group mb-3">
+                        <label for="id" class="col-sm-2 col-form-label">Id</label>
+                        <input type="text" class="form-control" id="id" th:field="*{id}" readonly>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="input-group mb-3">
+                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}" readonly>
+                    </div>
+
+                    <!-- Supplier -->
+                    <div class="input-group mb-3">
+                        <label for="supplier" class="col-sm-2 col-form-label">Supplier</label>
+                        <input type="text" class="form-control" id="supplier" th:field="*{supplier}" readonly>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="input-group mb-3">
+                        <label for="price" class="col-sm-2 col-form-label">Price</label>
+                        <input type="text" class="form-control" id="price" th:field="*{price}" readonly>
+                    </div>
+
+                    <!-- Picture -->
+                    <div class="input-group mb-3">
+                        <label for="img" class="col-sm-2 col-form-label">Picture</label>
+                        <img id="img" style="width: 1.5cm;" th:src="@{'/images/' + ${product.imageUrl}}"/>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="float-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
