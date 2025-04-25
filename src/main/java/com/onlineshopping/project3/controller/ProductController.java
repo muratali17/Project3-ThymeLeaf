@@ -80,4 +80,15 @@ public class ProductController {
         productService.deleteProduct(id);
         return "redirect:/product/all";
     }
+
+    @GetMapping(value="/images/{imageUrl}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable(value="imageUrl") String imageUrl) throws IOException {
+
+        String uploadDirMain = "src/main/resources/static/images/" + imageUrl;
+        Path uploadPathMain = Paths.get(uploadDirMain);
+        File file = new File(uploadPathMain.toString());
+
+        return Files.readAllBytes(file.toPath());
+    }
 }

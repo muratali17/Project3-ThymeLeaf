@@ -14,5 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT * FROM customers c WHERE lower(c.name) like lower(concat('%' , :name , '%')) " , nativeQuery = true)
     List<UserGetDTO> searchUsersByName(@Param("name") String name);
 
+    User findByUsername(String userName);
+
     boolean existsByPhone(String phone);
 }

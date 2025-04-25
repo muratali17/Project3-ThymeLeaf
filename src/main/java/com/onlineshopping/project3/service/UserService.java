@@ -8,6 +8,7 @@ import com.onlineshopping.project3.getDTO.UserGetDTO;
 import com.onlineshopping.project3.model.User;
 import com.onlineshopping.project3.repository.UserRepository;
 import com.onlineshopping.project3.updateDTO.UserUpdateDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,7 +58,7 @@ public class UserService {
         }
         else if (!fileName.isEmpty()){
             userAddDTO.setImageUrl(fileName);
-            String uploadDir = "target/classes/static/images/" + fileName;
+            String uploadDir = "src/main/resources/static/images/" + fileName;
             Path uploadPath = Paths.get(uploadDir);
 
             try{
@@ -67,7 +68,9 @@ public class UserService {
             }
         }
 
-        User user = new User(userAddDTO.getName(), userAddDTO.getAddress(), userAddDTO.getPhone(), userAddDTO.getUsername(), userAddDTO.getPassword(),userAddDTO.getRole(),userAddDTO.getImageUrl());
+        String encodedPassword = new BCryptPasswordEncoder().encode(userAddDTO.getPassword());
+
+        User user = new User(userAddDTO.getName(), userAddDTO.getAddress(), userAddDTO.getPhone(), userAddDTO.getUsername(), encodedPassword,userAddDTO.getRole(),userAddDTO.getImageUrl());
         if(userRepository.existsByPhone(user.getPhone())) {
             throw new DuplicatePhoneNumberException("Phone number already exists");
         }
@@ -86,7 +89,8 @@ public class UserService {
 
             userUpdateDTO.setImageUrl(fileName);
 
-            String uploadDir = "target/classes/static/images/" + fileName;
+            String uploadDir = "src/main/resources/static/images/" + fileName;
+
 
             Path uploadPath = Paths.get(uploadDir);
 
@@ -102,7 +106,12 @@ public class UserService {
         u.setAddress(userUpdateDTO.getAddress());
         u.setPhone(userUpdateDTO.getPhone());
         u.setUsername(userUpdateDTO.getUsername());
-        u.setPassword(userUpdateDTO.getPassword());
+
+        if(!userUpdateDTO.getPassword().isEmpty()) {
+            String encodedPassword = new BCryptPasswordEncoder().encode(userUpdateDTO.getPassword());
+            u.setPassword(encodedPassword);
+        }
+
         u.setRole(userUpdateDTO.getRole());
         u.setImageUrl(userUpdateDTO.getImageUrl());
         userRepository.save(u);
@@ -119,7 +128,7 @@ public class UserService {
 
             String fileName = user.getImageUrl();
 
-            File file = new File("target/classes/static/images/"+  fileName);
+            File file = new File("src/main/resources/static/images/"+  fileName);
             try {
                 boolean result = Files.deleteIfExists(file.toPath());
             } catch (IOException e) {
