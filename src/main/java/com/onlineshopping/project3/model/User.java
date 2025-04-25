@@ -1,7 +1,7 @@
 package com.onlineshopping.project3.model;
 
 import com.onlineshopping.project3.enums.Role;
-import com.onlineshopping.project3.getDTO.UserGetDTO;
+import com.onlineshopping.project3.dtos.get.UserGetDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

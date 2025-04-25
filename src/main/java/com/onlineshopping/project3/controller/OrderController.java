@@ -1,15 +1,14 @@
 package com.onlineshopping.project3.controller;
 
-import com.onlineshopping.project3.addDTO.OrderAddDTO;
-import com.onlineshopping.project3.getDTO.OrderGetDTO;
-import com.onlineshopping.project3.model.Order;
+import com.onlineshopping.project3.dtos.add.OrderAddDTO;
+import com.onlineshopping.project3.dtos.get.OrderGetDTO;
 import com.onlineshopping.project3.repository.OrderRepository;
 import com.onlineshopping.project3.repository.ProductRepository;
 import com.onlineshopping.project3.repository.UserRepository;
 import com.onlineshopping.project3.service.OrderService;
 import com.onlineshopping.project3.service.ProductService;
 import com.onlineshopping.project3.service.UserService;
-import com.onlineshopping.project3.updateDTO.OrderUpdateDTO;
+import com.onlineshopping.project3.dtos.updateDTO.OrderUpdateDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

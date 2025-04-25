@@ -1,4 +1,4 @@
-package com.onlineshopping.project3.addDTO;
+package com.onlineshopping.project3.dtos.add;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

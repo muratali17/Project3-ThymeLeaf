@@ -1,4 +1,4 @@
-package com.onlineshopping.project3.updateDTO;
+package com.onlineshopping.project3.dtos.updateDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

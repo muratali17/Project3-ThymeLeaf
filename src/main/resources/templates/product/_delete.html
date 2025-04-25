@@ -1,22 +1,44 @@
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-     th:object="${product}">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Delete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-bs-label="Close"></button>
+<!-- Delete Product Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" th:object="${product}">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Delete Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+
+            <div class="modal-body px-4 py-4">
                 <form th:action="@{/product/delete}" method="post">
-                    <p>The selected product will be deleted! Are you sure?</p>
+                    <p class="fs-5">⚠️ The selected product will be permanently <strong>deleted</strong>! Are you sure?</p>
+
                     <input type="hidden" name="id" th:value="${id}" />
-                    <div class="float-end">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                        <button type="button" onclick="javascript:window.location.href='/product/all'"
-                                class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    <div class="mt-4 text-end">
+                        <button type="submit" class="btn btn-danger px-4">Yes, Delete</button>
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal"
+                                onclick="window.location.href='/product/all'">Cancel</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<style>
+    .modal-content {
+        border-radius: 1rem;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    label.col-form-label {
+        white-space: nowrap;
+    }
+
+</style>

@@ -1,15 +1,15 @@
 package com.onlineshopping.project3.service;
 
-import com.onlineshopping.project3.addDTO.OrderAddDTO;
+import com.onlineshopping.project3.dtos.add.OrderAddDTO;
 import com.onlineshopping.project3.exception.ResourceNotFoundException;
-import com.onlineshopping.project3.getDTO.OrderGetDTO;
+import com.onlineshopping.project3.dtos.get.OrderGetDTO;
 import com.onlineshopping.project3.model.Order;
 import com.onlineshopping.project3.model.Product;
 import com.onlineshopping.project3.model.User;
 import com.onlineshopping.project3.repository.OrderRepository;
 import com.onlineshopping.project3.repository.ProductRepository;
 import com.onlineshopping.project3.repository.UserRepository;
-import com.onlineshopping.project3.updateDTO.OrderUpdateDTO;
+import com.onlineshopping.project3.dtos.updateDTO.OrderUpdateDTO;
 import org.springframework.stereotype.Service;
 import com.onlineshopping.project3.exception.ErrorMessages;
 

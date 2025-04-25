@@ -1,11 +1,9 @@
 package com.onlineshopping.project3.controller;
 
-import com.onlineshopping.project3.addDTO.ProductAddDTO;
-import com.onlineshopping.project3.model.Product;
-import com.onlineshopping.project3.model.User;
+import com.onlineshopping.project3.dtos.add.ProductAddDTO;
 import com.onlineshopping.project3.repository.ProductRepository;
 import com.onlineshopping.project3.service.ProductService;
-import com.onlineshopping.project3.updateDTO.ProductUpdateDTO;
+import com.onlineshopping.project3.dtos.updateDTO.ProductUpdateDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @Controller
 @RequestMapping("/product")

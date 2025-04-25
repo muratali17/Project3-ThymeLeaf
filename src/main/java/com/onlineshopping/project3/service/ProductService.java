@@ -1,12 +1,11 @@
 package com.onlineshopping.project3.service;
 
-import com.onlineshopping.project3.addDTO.ProductAddDTO;
-import com.onlineshopping.project3.exception.ErrorMessages;
-import com.onlineshopping.project3.exception.ResourceNotFoundException;
-import com.onlineshopping.project3.getDTO.ProductGetDTO;
+import com.onlineshopping.project3.dtos.add.ProductAddDTO;
+import com.onlineshopping.project3.dtos.get.ProductGetDTO;
 import com.onlineshopping.project3.model.Product;
 import com.onlineshopping.project3.repository.ProductRepository;
-import com.onlineshopping.project3.updateDTO.ProductUpdateDTO;
+import com.onlineshopping.project3.dtos.updateDTO.ProductUpdateDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,15 +16,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
+
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     public ProductGetDTO getProductById(Long id) {
 
@@ -125,4 +122,6 @@ public class ProductService {
                 .map(Product::toProductGetDTO)
                 .toList();
     }
+
+
 }

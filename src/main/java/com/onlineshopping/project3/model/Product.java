@@ -1,14 +1,11 @@
 package com.onlineshopping.project3.model;
 
 
-import com.onlineshopping.project3.getDTO.ProductGetDTO;
+import com.onlineshopping.project3.dtos.get.ProductGetDTO;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.List;
