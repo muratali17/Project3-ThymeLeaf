@@ -53,7 +53,7 @@ public class ProductService {
         }
         else if (!fileName.isEmpty()) {
             productAddDTO.setImageUrl(fileName);
-            String uploadDir = "target/classes/images/" + fileName;
+            String uploadDir = "src/main/resources/static/images/" + fileName;
             Path uploadPath = Paths.get(uploadDir);
 
             try{
@@ -81,7 +81,7 @@ public class ProductService {
         }
         else if (!fileName.isEmpty()) {
             product.setImageUrl(fileName);
-            String uploadDir = "target/classes/images/" + fileName;
+            String uploadDir = "src/main/resources/static/images/" + fileName;
             Path uploadPath = Paths.get(uploadDir);
 
             try{
@@ -108,7 +108,7 @@ public class ProductService {
 
             String fileName = product.getImageUrl();
 
-            File file = new File("target/classes/static/images/"+  fileName);
+            File file = new File("src/main/resources/static/images/"+  fileName);
             try {
                 boolean result = Files.deleteIfExists(file.toPath());
             } catch (IOException e) {
