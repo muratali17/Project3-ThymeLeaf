@@ -2,16 +2,23 @@ package com.onlineshopping.project3.controller;
 
 import com.onlineshopping.project3.dtos.add.OrderAddDTO;
 import com.onlineshopping.project3.dtos.get.OrderGetDTO;
+import com.onlineshopping.project3.enums.Status;
 import com.onlineshopping.project3.repository.OrderRepository;
 import com.onlineshopping.project3.repository.ProductRepository;
 import com.onlineshopping.project3.repository.UserRepository;
+import com.onlineshopping.project3.security.CustomUserDetails;
 import com.onlineshopping.project3.service.OrderService;
 import com.onlineshopping.project3.service.ProductService;
 import com.onlineshopping.project3.service.UserService;
 import com.onlineshopping.project3.dtos.updateDTO.OrderUpdateDTO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/order")
@@ -96,6 +103,36 @@ public class OrderController {
     @PostMapping("/delete")
     public String deleteOrder(@RequestParam("id") Long id) {
         orderService.deleteOrder(id);
+        return "redirect:/order/all";
+    }
+
+    @GetMapping("/add/{id}")
+    public String addSpecificOrder(@PathVariable Long id , Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails cud = (CustomUserDetails) auth.getPrincipal();
+        Long userId = cud.getId();
+
+        OrderAddDTO orderAddDTO = new OrderAddDTO();
+        orderAddDTO.setProductId(id);
+        orderAddDTO.setCustomerId(userId);
+
+        model.addAttribute("order", orderAddDTO);
+        model.addAttribute("product", productService.getProductById(id));
+        model.addAttribute("customer", userService.getUserById(userId));
+
+        return "/order/_add-specific-product";
+    }
+
+    @PostMapping("/add-specific-product")
+    public String addSpecificProduct(@ModelAttribute("order") OrderAddDTO order) {
+
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime parsedDate = LocalDateTime.parse(now, fmt);
+        order.setDate(parsedDate);
+        order.setStatus(Status.PENDING_SHIPMENT);
+        orderService.createOrder(order);
         return "redirect:/order/all";
     }
 }
