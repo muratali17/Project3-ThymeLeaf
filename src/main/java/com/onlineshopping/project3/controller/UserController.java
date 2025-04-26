@@ -1,8 +1,11 @@
 package com.onlineshopping.project3.controller;
 
 import com.onlineshopping.project3.dtos.add.UserAddDTO;
+import com.onlineshopping.project3.security.CustomUserDetails;
 import com.onlineshopping.project3.service.UserService;
 import com.onlineshopping.project3.dtos.updateDTO.UserUpdateDTO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -94,4 +97,22 @@ public class UserController {
 
         return Files.readAllBytes(file.toPath());
     }
+
+    @GetMapping("/my-account")
+    public String getUserAccount(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails cud = (CustomUserDetails) auth.getPrincipal();
+        Long userId = cud.getId();
+
+        model.addAttribute("user", userService.getUserById(userId));
+        return "user/my-account";
+    }
+
+    @PostMapping("/update/my-account")
+    public String updateUserAccount(@ModelAttribute("user") UserUpdateDTO user, @RequestParam("img")MultipartFile image) {
+
+        userService.updateUser(user, image);
+        return "user/my-account";
+    }
+
 }
