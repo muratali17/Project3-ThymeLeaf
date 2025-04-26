@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers(
                                 "/user/my-account","user/update/my-account",
-                                "/user/images/**","/product/**",
+                                "/user/images/**","/product/all","/product/details/{id}","/product/images/**",
                                 "/order/my-order/all","/order/details/{id}",
                                 "/order/add/{id}","/order/add-specific-product"
                         ).hasAnyRole("ADMIN","CUSTOMER")
