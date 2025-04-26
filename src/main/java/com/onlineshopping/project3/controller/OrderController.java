@@ -53,15 +53,6 @@ public class OrderController {
         return "/order/all";
     }
 
-    @GetMapping("/add")
-    public String addOrder(Model model) {
-        model.addAttribute("order", new OrderAddDTO());
-        model.addAttribute("products", productService.getAllProducts());
-        model.addAttribute("customers", userService.getAllUsers());
-
-        return "/order/_add";
-    }
-
     @PostMapping("/add")
     public String addOrder(@ModelAttribute("order") OrderAddDTO order) {
         orderService.createOrder(order);
