@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>MyAccount - OnlineShop</title>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 </head>
 
@@ -23,6 +22,11 @@
         border-radius: 0.5rem;
     }
 
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
     .btn-warning:hover {
         background-color: #e0a800;
         color: white;
@@ -32,48 +36,78 @@
         max-width: 500px;
         margin: 4rem auto;
     }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control-plaintext {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .img-thumbnail {
+        width: 2.5cm;
+        margin-right: 10px;
+    }
 </style>
 
 <body>
 
+<!-- Navbar fragment included -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
+<!-- Form Container -->
 <div class="form-container">
     <div class="card p-4">
         <h2 class="text-center mb-4">My Account</h2>
 
-        <!-- Register errorlari burada gösteriliyor. -->
+        <!-- Register errorları burada gösteriliyor. -->
         <div th:if="${errorMessage}" class="alert alert-danger text-center">
             <p th:text="${errorMessage}"></p>
         </div>
 
+        <!-- Form for updating user information -->
         <form th:action="@{/user/update/my-account}" enctype="multipart/form-data" method="post" th:object="${user}">
 
-            <!-- Id -->
+            <!-- Id (Hidden field) -->
             <input type="hidden" class="form-control" th:field="*{id}">
 
+            <!-- Full Name -->
             <div class="mb-3">
                 <label for="name" class="form-label">Full Name</label>
                 <input type="text" th:field="*{name}" class="form-control" id="name" required>
             </div>
+
+            <!-- Username -->
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" th:field="*{username}" class="form-control" id="username" required>
             </div>
+
+            <!-- Password -->
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" th:field="*{password}" class="form-control" id="password">
             </div>
+
+            <!-- Phone -->
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
                 <input type="text" th:field="*{phone}" class="form-control" id="phone" required>
             </div>
+
+            <!-- Address -->
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
                 <textarea th:field="*{address}" class="form-control" id="address" rows="3" required></textarea>
             </div>
 
-            <!-- Role -->
+            <!-- Role (Displaying only, not editable) -->
             <div class="form-group row mb-3">
                 <label for="role" class="col-sm-2 col-form-label">Role</label>
                 <div class="col-sm-10">
@@ -82,16 +116,17 @@
                 </div>
             </div>
 
-            <!-- Picture -->
+            <!-- Picture Upload -->
             <div class="input-group mb-3">
                 <label for="img" class="col-sm-2 col-form-label">Picture</label>
-                <img style="width: 1.5cm;" th:src="@{'/user/images/' + ${user.imageUrl}}"/>
+                <img class="img-thumbnail" th:src="@{'/user/images/' + ${user.imageUrl}}"/>
                 <div class="form-inline">
                     <input type="hidden" th:field="*{imageUrl}">
                     <input type="file" class="form-control-file" id="img" name="img" accept="image/*">
                 </div>
             </div>
 
+            <!-- Update Button -->
             <button type="submit" class="btn btn-warning w-100">Update</button>
 
         </form>

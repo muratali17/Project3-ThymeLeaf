@@ -5,17 +5,19 @@
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header bg-danger text-white">
                 <h5 class="modal-title">Delete Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body px-4 py-4">
                 <form th:action="@{/product/delete}" method="post">
-                    <p class="fs-5">⚠️ The selected product will be permanently <strong>deleted</strong>! Are you sure?</p>
+                    <p class="fs-5 text-center text-danger-emphasis mb-4">
+                        ⚠️ The selected product will be permanently <strong>deleted</strong>!<br> Are you sure?
+                    </p>
 
                     <input type="hidden" name="id" th:value="${id}" />
 
-                    <div class="mt-4 text-end">
-                        <button type="submit" class="btn btn-danger px-4">Yes, Delete</button>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-danger px-4 me-2">Yes, Delete</button>
                         <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal"
                                 onclick="window.location.href='/product/all'">Cancel</button>
                     </div>
@@ -24,13 +26,15 @@
         </div>
     </div>
 </div>
+
+<!-- Stil -->
 <style>
     .modal-content {
         border-radius: 1rem;
     }
 
-    .form-control:focus {
-        box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
     }
 
     .modal-header {
@@ -41,4 +45,13 @@
         white-space: nowrap;
     }
 
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #bb2d3b;
+        border-color: #b02a37;
+    }
 </style>

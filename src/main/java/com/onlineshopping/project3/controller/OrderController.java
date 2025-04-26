@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/order")
@@ -68,18 +70,18 @@ public class OrderController {
 
     @GetMapping("/details/{id}")
     public String getOrder(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("order",orderService.getOrderByIdFull(id));
+        model.addAttribute("order", orderService.getOrderByIdFull(id));
         return "/order/_show";
     }
 
     @GetMapping("/update/{id}")
     public String updateOrder(@PathVariable("id") Long id, Model model) {
-        if(orderService.getOrderById(id) == null) {
+        if (orderService.getOrderById(id) == null) {
             throw new RuntimeException("Order not found");
         }
         OrderGetDTO orderGetDTO = orderService.getOrderByIdFull(id);
 
-        model.addAttribute("order",orderGetDTO.toOrderUpdateDTO());
+        model.addAttribute("order", orderGetDTO.toOrderUpdateDTO());
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("customers", userService.getAllUsers());
         model.addAttribute("customerName", orderGetDTO.getCustomer().getName());
@@ -95,11 +97,12 @@ public class OrderController {
 
     @GetMapping("/delete/{id}")
     public String deleteOrder(@PathVariable Long id, Model model) {
-        if(id == null || id <= 0)
+        if (id == null || id <= 0)
             throw new IllegalArgumentException("id is invalid");
         model.addAttribute("order", orderService.getOrderById(id));
         return "order/_delete";
     }
+
     @PostMapping("/delete")
     public String deleteOrder(@RequestParam("id") Long id) {
         orderService.deleteOrder(id);
@@ -107,7 +110,7 @@ public class OrderController {
     }
 
     @GetMapping("/add/{id}")
-    public String addSpecificOrder(@PathVariable Long id , Model model) {
+    public String addSpecificOrder(@PathVariable Long id, Model model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails cud = (CustomUserDetails) auth.getPrincipal();
@@ -126,13 +129,30 @@ public class OrderController {
 
     @PostMapping("/add-specific-product")
     public String addSpecificProduct(@ModelAttribute("order") OrderAddDTO order) {
-
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime parsedDate = LocalDateTime.parse(now, fmt);
         order.setDate(parsedDate);
         order.setStatus(Status.PENDING_SHIPMENT);
         orderService.createOrder(order);
-        return "redirect:/order/all";
+        return "redirect:/order/my-order/all";
+    }
+
+    @GetMapping("/my-order/all")
+    public String listUserOrders(Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails cud = (CustomUserDetails) auth.getPrincipal();
+        Long userId = cud.getId();
+
+        List<OrderGetDTO> orders = orderService.getAllOrders()
+                .stream()
+                .filter(
+                        order -> Objects.equals(order.getCustomer().getId(), userId)
+                ).toList();
+
+
+        model.addAttribute("orders", orders);
+        return "/order/all";
     }
 }
