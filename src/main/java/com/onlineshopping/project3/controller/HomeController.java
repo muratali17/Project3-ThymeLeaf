@@ -19,4 +19,11 @@ public class HomeController {
     }
 
 
+
+    // Buraya koydum cunku default route burasi
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "access-denied";
+    }
+
 }

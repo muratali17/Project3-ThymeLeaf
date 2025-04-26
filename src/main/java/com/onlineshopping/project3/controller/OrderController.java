@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/order")
@@ -133,6 +135,18 @@ public class OrderController {
         order.setDate(parsedDate);
         order.setStatus(Status.PENDING_SHIPMENT);
         orderService.createOrder(order);
-        return "redirect:/order/all";
+        return "redirect:/order/my-order/all";
+    }
+
+    @GetMapping("/my-order/all")
+    public String listUserOrders(Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails cud = (CustomUserDetails) auth.getPrincipal();
+        Long userId = cud.getId();
+
+        List<OrderGetDTO> orders =  orderService.getAllOrders().stream().filter(order -> Objects.equals(order.getCustomer().getId(), userId)).toList();
+        model.addAttribute("orders", orders);
+        return "/order/all";
     }
 }
