@@ -1,0 +1,41 @@
+<!-- fragments/navbar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}">🛒 OnlineShop</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li sec:authorize="hasAnyRole('ADMIN', 'CUSTOMER')" class="nav-item">
+                        <a class="nav-link text-light" href="/user/all">Users</a>
+                    </li>
+                    <li sec:authorize="hasAnyRole('ADMIN', 'CUSTOMER')" class="nav-item">
+                        <a class="nav-link text-light" href="/product/all">Products</a>
+                    </li>
+                    <li sec:authorize="hasAnyRole('ADMIN', 'CUSTOMER')" class="nav-item">
+                        <a class="nav-link text-light" href="/order/all">Orders</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li sec:authorize="isAnonymous()" class="nav-item">
+                        <a class="nav-link text-light" href="/auth/login">Login</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()" class="nav-item">
+                        <a class="nav-link text-light" href="/auth/register">Register</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link text-light" href="/auth/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>

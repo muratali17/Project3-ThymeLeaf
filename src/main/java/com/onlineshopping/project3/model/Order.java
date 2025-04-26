@@ -1,10 +1,10 @@
 package com.onlineshopping.project3.model;
 
 import com.onlineshopping.project3.enums.Status;
-import com.onlineshopping.project3.getDTO.OrderGetDTO;
-import com.onlineshopping.project3.getDTO.ProductGetDTO;
-import com.onlineshopping.project3.getDTO.UserGetDTO;
-import com.onlineshopping.project3.updateDTO.OrderUpdateDTO;
+import com.onlineshopping.project3.dtos.get.OrderGetDTO;
+import com.onlineshopping.project3.dtos.get.ProductGetDTO;
+import com.onlineshopping.project3.dtos.get.UserGetDTO;
+import com.onlineshopping.project3.dtos.updateDTO.OrderUpdateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

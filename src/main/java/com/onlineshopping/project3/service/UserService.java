@@ -1,14 +1,15 @@
 package com.onlineshopping.project3.service;
 
-import com.onlineshopping.project3.addDTO.UserAddDTO;
+import com.onlineshopping.project3.dtos.add.RegisterDto;
+import com.onlineshopping.project3.dtos.add.UserAddDTO;
+import com.onlineshopping.project3.enums.Role;
 import com.onlineshopping.project3.exception.DuplicatePhoneNumberException;
-import com.onlineshopping.project3.exception.ErrorMessages;
-import com.onlineshopping.project3.exception.ResourceNotFoundException;
-import com.onlineshopping.project3.getDTO.UserGetDTO;
+import com.onlineshopping.project3.dtos.get.UserGetDTO;
 import com.onlineshopping.project3.model.User;
 import com.onlineshopping.project3.repository.UserRepository;
-import com.onlineshopping.project3.updateDTO.UserUpdateDTO;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.onlineshopping.project3.dtos.updateDTO.UserUpdateDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,20 +20,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
+
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public UserGetDTO getUserById(Long id) {
         User user = userRepository.findById(id)
-                        .orElse(null);
+                .orElse(null);
 
         if(user != null)
             return user.toUserGetDTO();
@@ -68,7 +67,7 @@ public class UserService {
             }
         }
 
-        String encodedPassword = new BCryptPasswordEncoder().encode(userAddDTO.getPassword());
+        String encodedPassword = passwordEncoder.encode(userAddDTO.getPassword());
 
         User user = new User(userAddDTO.getName(), userAddDTO.getAddress(), userAddDTO.getPhone(), userAddDTO.getUsername(), encodedPassword,userAddDTO.getRole(),userAddDTO.getImageUrl());
         if(userRepository.existsByPhone(user.getPhone())) {
@@ -108,7 +107,7 @@ public class UserService {
         u.setUsername(userUpdateDTO.getUsername());
 
         if(!userUpdateDTO.getPassword().isEmpty()) {
-            String encodedPassword = new BCryptPasswordEncoder().encode(userUpdateDTO.getPassword());
+            String encodedPassword = passwordEncoder.encode(userUpdateDTO.getPassword());
             u.setPassword(encodedPassword);
         }
 
@@ -139,10 +138,37 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public List<UserGetDTO> searchUsersByNameService(String name){
-        return userRepository.searchUsersByName(name);
-    }
 
+
+
+
+    public void register(RegisterDto registerDto) {
+
+        if (registerDto.getUsername() == null || registerDto.getUsername().isBlank() ||
+                registerDto.getPassword() == null || registerDto.getPassword().isBlank() ||
+                registerDto.getName() == null || registerDto.getName().isBlank() ||
+                registerDto.getPhone() == null || registerDto.getPhone().isBlank() ||
+                registerDto.getAddress() == null || registerDto.getAddress().isBlank()) {
+
+            throw new IllegalArgumentException("All fields are required.");
+        }
+
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
+            throw new IllegalArgumentException("Username already exists.");
+        }
+
+
+        User newUser = new User();
+        newUser.setName(registerDto.getName());
+        newUser.setUsername(registerDto.getUsername());
+        newUser.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        newUser.setRole(Role.CUSTOMER);
+        newUser.setImageUrl("nophoto.jpg");
+        newUser.setPhone(registerDto.getPhone());
+        newUser.setAddress(registerDto.getAddress());
+
+        userRepository.save(newUser);
+    }
 
 
 }

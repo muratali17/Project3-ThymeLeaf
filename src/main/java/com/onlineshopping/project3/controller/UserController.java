@@ -1,11 +1,8 @@
 package com.onlineshopping.project3.controller;
 
-import com.onlineshopping.project3.addDTO.UserAddDTO;
-import com.onlineshopping.project3.model.User;
-import com.onlineshopping.project3.repository.UserRepository;
+import com.onlineshopping.project3.dtos.add.UserAddDTO;
 import com.onlineshopping.project3.service.UserService;
-import com.onlineshopping.project3.updateDTO.UserUpdateDTO;
-import org.springframework.http.ResponseEntity;
+import com.onlineshopping.project3.dtos.updateDTO.UserUpdateDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,19 +13,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserRepository userRepository;
-
     private final UserService userService;
 
-    public UserController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

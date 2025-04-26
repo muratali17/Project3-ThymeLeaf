@@ -1,4 +1,4 @@
-package com.onlineshopping.project3.updateDTO;
+package com.onlineshopping.project3.dtos.updateDTO;
 
 import com.onlineshopping.project3.enums.Status;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.onlineshopping.project3.addDTO;
+package com.onlineshopping.project3.dtos.updateDTO;
 
 import com.onlineshopping.project3.enums.Role;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserAddDTO {
+public class UserUpdateDTO {
 
+    private Long id;
 
     private String name;
 
@@ -24,5 +25,4 @@ public class UserAddDTO {
     private Role role;
 
     private String imageUrl = "nophoto.jpg";
-
 }

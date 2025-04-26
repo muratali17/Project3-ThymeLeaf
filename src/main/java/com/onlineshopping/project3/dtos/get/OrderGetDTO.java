@@ -1,10 +1,7 @@
-package com.onlineshopping.project3.getDTO;
+package com.onlineshopping.project3.dtos.get;
 
 import com.onlineshopping.project3.enums.Status;
-import com.onlineshopping.project3.updateDTO.OrderUpdateDTO;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.onlineshopping.project3.dtos.updateDTO.OrderUpdateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
