@@ -28,7 +28,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/", "/auth/**", "/logout","/images/**").permitAll()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/user/**","/product/**","/order/**").hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers("/user/my-account","user/update/my-account","/user/images/**","/product/**","/order/**").hasRole("CUSTOMER")
+                        .requestMatchers("/user/**","/product/**","/order/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception
