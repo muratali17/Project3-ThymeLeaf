@@ -9,7 +9,7 @@
             </div>
 
             <div class="modal-body px-4 py-3">
-                <form th:action="@{/order/update}" th:object="${order}" method="post">
+                <form th:action="@{/order/update}" th:object="${order}" method="post" class="needs-validation" novalidate>
 
                     <!-- ID -->
                     <input type="hidden" class="form-control" th:field="*{id}">
@@ -19,12 +19,15 @@
                         <label for="customer" class="col-sm-2 col-form-label fw-semibold">Customer</label>
                         <div class="col-sm-10">
                             <small class="form-text text-muted mb-2" th:text="${customerName}"></small>
-                            <select class="form-select" id="customer" name="customer" th:field="*{customerId}">
+                            <select class="form-select" id="customer" name="customer" th:field="*{customerId}" required>
                                 <option th:each="cus : ${customers}"
                                         th:value="${cus.id}"
                                         th:text="${cus.name}">
                                 </option>
                             </select>
+                            <div class="invalid-feedback">
+                                Please select a customer.
+                            </div>
                         </div>
                     </div>
 
@@ -33,12 +36,15 @@
                         <label for="product" class="col-sm-2 col-form-label fw-semibold">Product</label>
                         <div class="col-sm-10">
                             <small class="form-text text-muted mb-2" th:text="${productName}"></small>
-                            <select class="form-select" id="product" name="product" th:field="*{productId}">
+                            <select class="form-select" id="product" name="product" th:field="*{productId}" required>
                                 <option th:each="product : ${products}"
                                         th:value="${product.id}"
                                         th:text="${product.name}+' - '+${product.price}+' ( '+${product.supplier} + ')' ">
                                 </option>
                             </select>
+                            <div class="invalid-feedback">
+                                Please select a product.
+                            </div>
                         </div>
                     </div>
 
@@ -47,7 +53,10 @@
                         <label for="city" class="col-sm-2 col-form-label fw-semibold">City</label>
                         <div class="col-sm-10">
                             <small class="form-text text-muted mb-2" th:text="${order.city}"></small>
-                            <input type="text" class="form-control" id="city" th:field="*{city}" placeholder="Enter city">
+                            <input type="text" class="form-control" id="city" th:field="*{city}" placeholder="Enter city" required>
+                            <div class="invalid-feedback">
+                                Please enter the city.
+                            </div>
                         </div>
                     </div>
 
@@ -57,7 +66,10 @@
                         <div class="col-sm-10">
                             <small class="form-text text-muted mb-2"
                                    th:text="${#temporals.format(order.date, 'dd/MM/yyyy HH:mm')}"></small>
-                            <input type="datetime-local" class="form-control" id="orderDate" th:field="*{date}">
+                            <input type="datetime-local" class="form-control" id="orderDate" th:field="*{date}" required>
+                            <div class="invalid-feedback">
+                                Please select a valid order date.
+                            </div>
                         </div>
                     </div>
 
@@ -66,23 +78,26 @@
                         <label for="status" class="col-sm-2 col-form-label fw-semibold">Status</label>
                         <div class="col-sm-10">
                             <small class="form-text text-muted mb-2" th:text="${order.status.toString()}"></small>
-                            <select id="status" class="form-select" th:field="*{status}">
+                            <select id="status" class="form-select" th:field="*{status}" required>
                                 <option th:each="s : ${T(com.onlineshopping.project3.enums.Status).values()}"
                                         th:text="${s}"
                                         th:value="${s}">
                                 </option>
                             </select>
+                            <div class="invalid-feedback">
+                                Please select a status.
+                            </div>
                         </div>
                     </div>
 
                     <!-- Buttons -->
                     <div class="mt-4 text-end">
                         <button type="submit" class="btn btn-success px-4">Save</button>
-                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal"
-                                >Close</button>
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
                     </div>
 
                 </form>
+
             </div>
         </div>
     </div>
@@ -106,3 +121,21 @@
         white-space: nowrap;
     }
 </style>
+<script>
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+    })();
+</script>
+

@@ -67,8 +67,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-bs-label="Close"></button>
             </div>
             <div class="modal-body px-4 py-4">
-                <form th:action="@{/order/add-specific-product}" th:object="${order}" method="post">
-
+                <form th:action="@{/order/add-specific-product}" th:object="${order}" method="post" class="needs-validation" novalidate>
                     <!-- CustomerId -->
                     <input type="hidden" class="form-control" th:field="*{customerId}">
 
@@ -108,7 +107,12 @@
                     <!-- City -->
                     <div class="input-group mb-3">
                         <label for="city" class="col-sm-2 col-form-label fw-semibold">City</label>
-                        <input type="text" class="form-control" id="city" th:field="*{city}" placeholder="Enter your city">
+                        <div class="form-floating col">
+                            <input type="text" class="form-control" id="city" th:field="*{city}" placeholder="Enter your city" required>
+                            <div class="invalid-feedback">
+                                Please enter your city.
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Buttons -->
@@ -116,8 +120,8 @@
                         <button type="submit" class="btn btn-success px-4">Order</button>
                         <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
                     </div>
-
                 </form>
+
             </div>
         </div>
     </div>
@@ -129,3 +133,22 @@
 
 </body>
 </html>
+
+<script>
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+    })();
+</script>
+
