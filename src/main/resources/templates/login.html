@@ -76,6 +76,10 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required />
             </div>
+            <div>
+                <input type="checkbox" id="remember-me" name="remember-me" />
+                <label for="remember-me">Remember Me</label>
+            </div>
             <button type="submit" class="btn btn-warning w-100">Login</button>
             <div class="mt-3 text-center">
                 <span>Don't have an account? <a th:href="@{/auth/register}">Register</a></span>
