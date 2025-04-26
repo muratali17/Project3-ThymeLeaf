@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>All Products</title>
@@ -22,7 +22,7 @@
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-end mb-3">
-                <button type="button" onclick="AddProduct()" class="btn btn-primary"
+                <button sec:authorize="hasAnyRole('ADMIN')" type="button" onclick="AddProduct()" class="btn btn-primary"
                         data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Add product">
                     <i class="bi bi-plus-circle"></i> Add
                 </button>
@@ -42,15 +42,19 @@
                     <td th:text="${product.name}"></td>
                     <td th:text="${product.price} + ' $'"></td>
                     <td>
-                        <a href="#" th:onclick="'javascript:Details('+${product.id}+');'" class="btn btn-info btn-sm mx-1"
+                        <a sec:authorize="hasAnyRole('ADMIN','CUSTOMER')" href="#" th:onclick="'javascript:AddOrder('+${product.id}+');'" class="btn btn-success btn-sm mx-1"
+                           data-bs-toggle="tooltip" title="Order">
+                            <i class="bi bi-cart-check-fill"></i>
+                        </a>
+                        <a sec:authorize="hasAnyRole('ADMIN','CUSTOMER')" href="#" th:onclick="'javascript:Details('+${product.id}+');'" class="btn btn-info btn-sm mx-1"
                            data-bs-toggle="tooltip" title="Details">
                             <i class="bi bi-info-circle"></i>
                         </a>
-                        <a href="#" th:onclick="'javascript:Update('+${product.id}+');'" class="btn btn-warning btn-sm mx-1"
+                        <a sec:authorize="hasAnyRole('ADMIN')" href="#" th:onclick="'javascript:Update('+${product.id}+');'" class="btn btn-warning btn-sm mx-1"
                            data-bs-toggle="tooltip" title="Update">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="#" th:onclick="'javascript:Delete('+${product.id}+');'" class="btn btn-danger btn-sm mx-1"
+                        <a sec:authorize="hasAnyRole('ADMIN')" href="#" th:onclick="'javascript:Delete('+${product.id}+');'" class="btn btn-danger btn-sm mx-1"
                            data-bs-toggle="tooltip" title="Delete">
                             <i class="bi bi-trash"></i>
                         </a>
@@ -81,6 +85,20 @@
                 alert("Error");
             }
         });
+    }
+
+    function AddOrder(id) {
+        $.ajax({
+            type: "GET",
+            url: "/order/add/"+ id,
+            success: function (data) {
+                $('#modal-tag').html(data);
+                $('#modal-tag').find('.modal').modal('show');
+            },
+            error: function (data) {
+                alert("Error");
+            }
+        })
     }
 
     function Details(id) {
