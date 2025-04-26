@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserGetDTO {
 
-
     private Long id;
 
     private String name;

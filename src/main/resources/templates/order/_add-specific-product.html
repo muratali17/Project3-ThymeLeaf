@@ -1,0 +1,68 @@
+<!-- Add User -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-bs-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/order/add-specific-product}" th:object="${order}" method="post">
+
+
+                    <!-- CustomerId -->
+                    <input type="hidden" class="form-control" th:field="*{customerId}">
+
+                    <!-- ProductId -->
+                    <input type="hidden" class="form-control" th:field="*{productId}">
+
+
+                    <!-- Product -->
+                    <div class="input-group mb-3">
+                        <label for="productName" class="col-lg-2 control-label">Product</label><br/>
+                        <div class="form-row align-items-end">
+                            <div class="form-group col">
+                                <p id="productName" name="productName" class="form-control-plaintext"
+                                   th:text="${product.name}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label for="productPrice" class="col-lg-2 control-label">Product</label><br/>
+                        <div class="form-row align-items-end">
+                            <div class="form-group col">
+                                <p id="productPrice" name="productPrice" class="form-control-plaintext"
+                                   th:text="${product.price}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label for="productSupplier" class="col-lg-2 control-label">Product</label><br/>
+                        <div class="form-row align-items-end">
+                            <div class="form-group col">
+                                <p id="productSupplier" name="productSupplier" class="form-control-plaintext"
+                                   th:text="${product.supplier}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- City -->
+                    <div class="input-group mb-3">
+                        <label for="city" class="col-sm-2 col-form-label">City</label>
+                        <input type="text" class="form-control" id="city" th:field="*{city}">
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="float-end">
+                        <button type="submit" class="btn btn-primary">Order</button>
+                        <button type="button" onclick="javascript:window.location.href='/product/all'"
+                                class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -19,7 +19,7 @@
                                 <select class="form-select" id="customer" name="customer" th:field="*{customerId}">
                                     <option th:each="cus : ${customers}"
                                             th:value="${cus.id}"
-                                            th:text="${cus.name}">
+                                            th:text="${cus.username}">
                                     </option>
                                 </select>
                             </div>
