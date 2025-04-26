@@ -1,53 +1,64 @@
-<!-- Add User -->
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
->
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-bs-label="Close"></button>
+<!-- Order Details Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">Order Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+
+            <div class="modal-body px-4 py-3">
                 <form th:object="${order}">
-                    <!-- Id -->
+                    <!-- ID -->
                     <input type="hidden" class="form-control" th:field="*{id}">
 
                     <!-- Customer -->
-                    <div class="input-group mb-3">
-                        <label for="customer" class="col-sm-2 col-form-label">Customer</label>
-                        <input type="text" class="form-control" id="customer" readonly th:field="${order.customer.name}">
+                    <div class="mb-3 row align-items-center">
+                        <label for="customer" class="col-sm-2 col-form-label fw-semibold">Customer</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer" readonly th:field="${order.customer.name}">
+                        </div>
                     </div>
 
                     <!-- Product -->
-                    <div class="input-group mb-3">
-                        <label for="car" class="col-sm-2 col-form-label">Product</label>
-                        <input type="text" class="form-control" id="car" th:value="${order.product.name}+' - '+${order.product.price}+' ( '+${order.product.supplier} + ')' "
-                        readonly>
+                    <div class="mb-3 row align-items-center">
+                        <label for="product" class="col-sm-2 col-form-label fw-semibold">Product</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="product"
+                                   th:value="${order.product.name}+' - '+${order.product.price}+' ( '+${order.product.supplier} + ')' "
+                                   readonly>
+                        </div>
                     </div>
 
                     <!-- City -->
-                    <div class="input-group mb-3">
-                        <label for="city" class="col-sm-2 col-form-label">City</label>
-                        <input type="text" class="form-control" id="city" th:field="*{city}" readonly>
+                    <div class="mb-3 row align-items-center">
+                        <label for="city" class="col-sm-2 col-form-label fw-semibold">City</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="city" th:field="*{city}" readonly>
+                        </div>
                     </div>
 
-                    <!-- Date -->
-                    <div class="input-group mb-3">
-                        <label for="orderDate" class="col-sm-2 col-form-label">Order Date</label>
-                        <input type="datetime-local" class="form-control" id="orderDate"
-                               th:value="${order.date}" readonly>
+                    <!-- Order Date -->
+                    <div class="mb-3 row align-items-center">
+                        <label for="orderDate" class="col-sm-2 col-form-label fw-semibold">Order Date</label>
+                        <div class="col-sm-10">
+                            <input type="datetime-local" class="form-control" id="orderDate"
+                                   th:value="${order.date}" readonly>
+                        </div>
                     </div>
 
                     <!-- Status -->
-                    <div class="input-group mb-3">
-                        <label for="role" class="col-sm-2 col-form-label">Role</label>
-                        <input type="text" class="form-control" id="role" th:field="*{status}" readonly>
+                    <div class="mb-3 row align-items-center">
+                        <label for="status" class="col-sm-2 col-form-label fw-semibold">Status</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="status" th:field="*{status}" readonly>
+                        </div>
                     </div>
 
                     <!-- Buttons -->
-                    <div class="float-end">
-                        <button type="button" onclick="javascript:window.location.href='/order/all'"
-                                class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="mt-4 text-end">
+                        <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal"
+                                onclick="window.location.href='/order/all'">Close</button>
                     </div>
                 </form>
             </div>
@@ -55,3 +66,21 @@
     </div>
 </div>
 
+<!-- Stil -->
+<style>
+    .modal-content {
+        border-radius: 1rem;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    label.col-form-label {
+        white-space: nowrap;
+    }
+</style>
