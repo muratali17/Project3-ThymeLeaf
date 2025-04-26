@@ -40,15 +40,20 @@
         padding: 10px;
         margin-bottom: 20px;
     }
+
+    .alert-success {
+        background-color: #6af667;
+        color: #fcfcfc;
+        border: 1px solid #6af667;
+        border-radius: 0.5rem;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
 </style>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold" th:href="@{/}">🛒 OnlineShop</a>
-    </div>
-</nav>
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="form-container">
 
@@ -63,7 +68,7 @@
         </div>
 
         <!-- Register olduktan sonra bir basari mesaji ile birlikte login sayfasina yolluyoruz. Mesaji sayfada göstermek icin burasi -->
-        <div th:if="${successMessage}" class="alert-custom">
+        <div th:if="${successMessage}" class="alert-success">
             <strong>Success!</strong> <span th:text="${successMessage}"></span>
         </div>
 

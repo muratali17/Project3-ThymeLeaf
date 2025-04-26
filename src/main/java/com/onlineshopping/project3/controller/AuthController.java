@@ -3,6 +3,8 @@ package com.onlineshopping.project3.controller;
 import com.onlineshopping.project3.dtos.add.RegisterDto;
 import com.onlineshopping.project3.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,5 +54,11 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/logout")
+    String logout() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(null);
+        return "redirect:/";
+    }
 
 }
