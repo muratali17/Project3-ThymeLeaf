@@ -26,10 +26,21 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/auth/**", "/logout","/images/**","/access-denied").permitAll()
+                        .requestMatchers(
+                                "/", "/auth/**",
+                                "/logout","/images/**",
+                                "/access-denied"
+                        ).permitAll()
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/user/my-account","user/update/my-account","/user/images/**","/product/**","/order/**").hasAnyRole("ADMIN","CUSTOMER")
-                        .requestMatchers("/user/**","/product/**","/order/**").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/user/my-account","user/update/my-account",
+                                "/user/images/**","/product/**",
+                                "/order/my-order/all","/order/details/{id}",
+                                "/order/add/{id}","/order/add-specific-product"
+                        ).hasAnyRole("ADMIN","CUSTOMER")
+                        .requestMatchers(
+                                "/user/**", "/order/**"
+                        ).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception

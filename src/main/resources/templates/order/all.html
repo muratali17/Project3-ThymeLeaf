@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:width="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:width="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>All Orders</title>
@@ -24,8 +26,8 @@
         </div>
         <div class="card-body">
             <div class="d-flex justify-content-end mb-3">
-                <button type="button" onclick="AddOrder()" class="btn btn-primary"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Add Order">
+                <button sec:authorize="hasAnyRole('ADMIN')" type="button" onclick="AddOrder()" class="btn btn-primary"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Add order">
                     <i class="bi bi-plus-circle"></i> Add
                 </button>
             </div>
@@ -50,17 +52,17 @@
                     <td th:text="${#temporals.format(order.date, 'dd/MM/yyyy HH:mm')}"></td>
                     <td th:text="${order.status.toString()}"></td>
                     <td>
-                        <a href="#" th:onclick="'javascript:Details('+${order.id}+');'" class="btn btn-info btn-sm mx-1"
-                           data-bs-toggle="tooltip" title="Details">
-                            <i class="bi bi-info-circle"></i>
+                        <a sec:authorize="hasAnyRole('ADMIN','CUSTOMER')" href="#" th:onclick="'javascript:Details('+${order.id}+');'" class="btn btn-info"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Details"><i
+                                class="bi bi-info-circle"></i>
                         </a>
-                        <a href="#" th:onclick="'javascript:Update('+${order.id}+');'" class="btn btn-warning btn-sm mx-1"
-                           data-bs-toggle="tooltip" title="Update">
-                            <i class="bi bi-pencil"></i>
+                        <a sec:authorize="hasAnyRole('ADMIN')" href="#" th:onclick="'javascript:Update('+${order.id}+');'" class="btn btn-warning"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Update"><i
+                                class="bi bi-pencil"></i>
                         </a>
-                        <a href="#" th:onclick="'javascript:Delete('+${order.id}+');'" class="btn btn-danger btn-sm mx-1"
-                           data-bs-toggle="tooltip" title="Delete">
-                            <i class="bi bi-trash"></i>
+                        <a sec:authorize="hasAnyRole('ADMIN')" href="#" th:onclick="'javascript:Delete('+${order.id}+');'" class="btn btn-danger"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"><i
+                                class="bi bi-trash"></i>
                         </a>
                     </td>
                 </tr>
